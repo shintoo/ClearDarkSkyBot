@@ -14,7 +14,7 @@ import tweepy
 
 def twitter_api():
     keys = {}
-    with open("keys.csv", "r") as f:
+    with open("tables/keys.csv", "r") as f:
         keys = csv.DictReader(f).__next__()
 
     auth = tweepy.OAuthHandler(keys["API_key"], keys["API_secret_key"])
@@ -25,7 +25,7 @@ def twitter_api():
 
 def read_locations():
    locations = []
-   with open("locations.csv", "r") as f:
+   with open("tables/locations.csv", "r") as f:
       reader = csv.reader(f)
       for line in reader:
           locations.append(line)
@@ -38,16 +38,13 @@ def tweet_body(location_row):
       "location_id": location_row[1]
     }
 
-    with open("greetings.j2", "r") as f:
+    with open("templates/greetings.j2", "r") as f:
         greetings = Template(f.read()).render(**args).split('\n')
-        print(greetings)
         greeting = greetings[random.randint(0, len(greetings)-1)]
-
-
 
     args["greeting"] = greeting
 
-    with open("template.j2", "r") as f:
+    with open("templates/tweet.j2", "r") as f:
         body = Template(f.read()).render(**args)
     
     return body
