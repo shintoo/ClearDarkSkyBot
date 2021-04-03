@@ -1,6 +1,12 @@
 """
-Requirements from Attilla Danko:
-    * Link the html page for the chart with each use of a chart
+cleardarkskybot.py - Daily clear dark sky charts posted to Twitter
+
+Files:
+    - tables/keys.csv: Twitter API keys go in here.
+    - tables/locations.csv: List of locations go in here. 2 columns: Name and ID (used in URLs)
+    - templates/greetings.j2: List of greetings that will be used in tweets.
+    - templates/tweet.j2: The body of the tweet, including the greeting and the link to the chart key page.
+
 """
 
 import csv
