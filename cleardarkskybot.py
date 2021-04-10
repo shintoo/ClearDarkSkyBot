@@ -15,6 +15,7 @@ from datetime import datetime
 import time
 import requests
 import random
+from multithreading import Thread
 
 from jinja2 import Template
 import tweepy
@@ -242,14 +243,13 @@ def mentions_handler(api):
 
     since_id = read_last_mention_handled_id()
 
+    print(f"Waiting for a mention...")
     try:
         while True:
             new_since_id = since_id
 
             for tweet in tweepy.Cursor(api.mentions_timeline, since_id=new_since_id).items():
                 new_since_id = max(tweet.id, new_since_id)
-
-
 
                 print(f"Received mention:\n'{tweet.text}'\n")
 
@@ -271,8 +271,6 @@ def mentions_handler(api):
 if __name__ == "__main__":
     api = twitter_api()
     print("Successfully setup Twitter API")
-
-    last_mention_handled = read_last_mention_handled_id()
 
     daily_post_thread = Thread(target=daily_loop, args=(api, 17,))
     mentions_handler_thread = Thread(target=mentions_handler, args=(api,))
