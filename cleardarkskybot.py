@@ -15,7 +15,7 @@ from datetime import datetime
 import time
 import requests
 import random
-from multithreading import Thread
+from threading import Thread
 
 from jinja2 import Template
 import tweepy
